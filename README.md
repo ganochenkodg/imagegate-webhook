@@ -91,7 +91,7 @@ $ kubectl logs imagegate-webhook-67f797d445-7k889 -n imagegate
 ## Usage
 
 Since we're using the default configuration, let's try to create a Pod with an inappropriate image. 
-Current we allow to use image from `docker.io` and `gcr.io` registries, require to set any tag, but disallow to use latest and staging tags.
+Current we allow to use images from `docker.io` and `gcr.io` registries, require to set any tag, but disallow to use `latest` and `staging` tags.
 
 ```console
 $ kubectl run nginx --image=nginx
