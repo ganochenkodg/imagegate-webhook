@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: imagegate-webhook-config
+  namespace: imagegate
+data:
+  ALLOWED_REGISTRIES: "docker.io,gcr.io"
+  BLOCKED_TAGS: "staging,latest"
+  DISABLE_EMPTY_TAG: "true"

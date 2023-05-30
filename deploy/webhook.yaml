@@ -1,0 +1,31 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: com.imagegate.webhook
+webhooks:
+  - name: com.imagegate.webhook
+    namespaceSelector:
+      matchExpressions:
+      - key: "imagegate/disable-filtering"
+        operator: "NotIn"
+        values:
+        - "true"
+      - key: "name"
+        operator: "NotIn"
+        values:
+        - "imagegate"
+        - "kube-system"
+    rules:
+    - apiGroups:   [""]
+      apiVersions: ["v1"]
+      operations:  ["CREATE"]
+      resources:   ["pods"]
+      scope:       "Namespaced"
+    clientConfig:
+      service:
+        namespace: imagegate
+        name: imagegate-webhook
+        path: "/"
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUV0RENDQXB3Q0NRQ2p1SXNUNjlYdTJUQU5CZ2txaGtpRzl3MEJBUXNGQURBY01Sb3dHQVlEVlFRRERCRkoKYldGblpVZGhkR1VnVjJWaWFHOXZhekFlRncweU16QTFNekF5TXpFMU5EUmFGdzB5TXpBMk1qa3lNekUxTkRSYQpNQnd4R2pBWUJnTlZCQU1NRVVsdFlXZGxSMkYwWlNCWFpXSm9iMjlyTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGCkFBT0NBZzhBTUlJQ0NnS0NBZ0VBc0paYXpoSld0M2R4WTBudWg5dDFJOUhQOHBabVpiNGoyRUo5OWlyWWh2eloKZXF5WTNSb3V3SitjMEdxWkg5YmFyVVB0N1NPanFaUmt0ZWUwVzJkanZCRjZOc1hhL2VXaElPM0ZyWGkvcW1pUApkU1Z0YjJiWTdnQmF1NUJlZlNCbm45T0NEUmdUV3FRVFFBdjRzVGdTMm1UaElycGRvbzFEcmtHS2FYbFhwbDM4CktscE5NcnBDVUFueWo3SkFjUTlmcUorTC9kMytBVU5XRXh2bk1aR2t3ZlRkWU12cm8rYk9mclgvRm1wSTVxYkgKclpHcDlKUVNDV2tkOEhZM1NQUXkzME1rNWZJVzB5bFpvM3M0NVBRbU94SVVYNWhlcFpyRTBHeHR4Nk9MRlVYUApLNmxCR1dJRVBUc0FLK3QxOHVRRk9uZ1hqUlRWVkVYOFRMOFpSRWEyZkZDUnZxTEhtTU5HakNoTVM3VVhtY0xYCmpCSWRzY08rQjVVUDcyd2R5Y1V1bEsrMkRxbWFHRWtNeXEySjdaaVBEOGhCNDBXekw3M2d6eXZpSkw4eU4wM0IKQll6eGtjeUM3Uk9UMmFZOWs4NVZtRjZDM3FIRldld0VXS3o0QjBCL3cxZVBEUXdBN05oN25CWEx5UW5zVDRwRwpVTzBBLzloY2IzMDlqNWMvVS9Dekl0MDFhTFdBWEVCS09oU0JiNHBSaE9BcVV4WnlLZTFuNGlwRWpZdHdCWURoCmY4Yi9aeHppMDF4dnI0bVRtNG9TY1NBREttNEFTTDlkdVJTekxuUk9wR21RcUxnUFhlZzFtdm9QV1R2M25HK1AKcUxpZ1NoU1RkOFVrNlpMMGhnQWd4NkE2anJvdk5DSTBtVHRxcWVDbVd5VkhVQUlZN29MQmRXWEQvN1NhVTdFQwpBd0VBQVRBTkJna3Foa2lHOXcwQkFRc0ZBQU9DQWdFQUxqNncyUjlzN3MvZkpMVjlGVkh6V3JodThGNXJNT3crClY0bzJaam55UVkrSXB5blJ6aERma1B4MlZRWkJSeTlBTTg5ckhVQmJEandvYmJyVzQ1NUtwcUYzOVZWSXJ1dnAKYXp1WmNhaVVtM0toS0UvWGJWR0gwUjNoWWd0bVpBRkxDaDV1Y3hJRzlzcG1yRGtWNzc1MElCWlpXTk1rQ1dSVQpOTm56ZVQ2Wjc4S3VNbFhyR3JpcmYxdE5HR2xoQ0Z0VC9ldzViVFBMbjdvazA5cEZrWnFtWWtuRWg2WklSMXdTCk14QkNyZGJWMmc0WmljVEJtUno0VXhwVDJGQ1o1dDFwM0pHVnpQYU9pZ3AwRE81bFkzd3Jzckhja3dxT3dRQisKazkzbzdtSng3YzlIV1kxbTdraFo1TTdueUlndVkxSWdkL29pMVZjd000VW1zRDZENVhybHpwYm1WNm9sSlE4aQp5czRTbnRYMUtIYVJzeGhTd1N0amlMdVpOU0N6NXVoNi9ta3BIb2JKYmN0QkV3QVNQaFBtOTFhd2hXQzhzcUZiCmZ6V0s5QVNEVnZCQzBjdzhaOEp0MnBqS3FXeFZ4SCtCTXc1RmNGbW5MelhkY25xaGZ5Q3BlMFNRT3pEb3Q2UC8KcFE0YmwwbDEzeDNiT2VWay82WU9nRk5wdktNb0ZrQWFaTTU5UktVOE9BSWhjYTBwbm9ROTNsalFCZ1ROUlRJMAp4bWZvdE9GRU9Kdy83ZWV2K05aSlpJdUJPVnova3hZQnI5Rmxqcjc1VjBvWUEzWlBDWlM1aTNMNWFVZUsxMkpvCkZKZHI4YnpmcklPcDlWdHdZMUZzK1Y2OEVwTlRGcU9wOTJjWWpxMmRxeE9kWkhja0wxOGIxd0FYdWRybXZmazMKYktYUjE1L291WE09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    admissionReviewVersions: ["v1"]
+    sideEffects: None
