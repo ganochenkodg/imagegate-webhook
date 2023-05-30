@@ -8,16 +8,16 @@
 
 **Can I do it easier?** Sure, you can, just install ImageGate and configure allowed registries, prohibited image tags and enable/disable non-tagged images.
 
-### Overview
+## Overview
 
-ImageGate is a tool to prevent running Pod from untrusted registries and using non-allowed image tags.
+ImageGate is a tool for validationg new Pods configuration. It prevents the use of images from untrusted registries and the use of non-allowed tags in production.
 
 It's composed of two parts:
 
 - ImageGate Deployment (with ConfigMap-stored parameters) and ClusterIP Service
 - [ValidatingWebhookConfiguration](https://kubernetes.io/docs/reference/access-authn-authz/extensible-admission-controllers/) to validate new Pods configuration
  
-### Configuration
+## Configuration
 
 These are the environment variables understood by the container image.
 | **Variable**           | **Description**                                                                                       |
@@ -30,7 +30,7 @@ These parameters are stored in the [configmap.yaml](deploy/configmap.yaml) file.
 
 Also you can prevent some of the namespaces from filtering by adding the `imagegate/disable-filtering=true` label to them.
 
-### Installation
+## Installation
 
 Clone this repository and go to the `deploy` folder:
 
@@ -88,7 +88,7 @@ $ kubectl logs imagegate-webhook-67f797d445-7k889 -n imagegate
 
 ![](resources/screenshot1.png)
 
-### Usage
+## Usage
 
 Since we're using the default configuration, let's try to create a Pod with an inappropriate image. 
 Current we allow to use image from `docker.io` and `gcr.io` registries, require to set any tag, but disallow to use latest and staging tags.
@@ -120,7 +120,7 @@ pod/nginx-dev created
 
 ## Cleanup
 
-To remove ImageGate please run next commands:
+To remove ImageGate please run the next commands:
 
 ```console
 $ kubectl delete validatingwebhookconfiguration com.imagegate.webhook
