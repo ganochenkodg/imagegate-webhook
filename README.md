@@ -2,7 +2,7 @@
 
 # ImageGate
 
-**Problem:** "I want to make my cluster more secure and add restrictions on the images used in production."
+**Problem:** I want to make my cluster more secure and add restrictions on the images used in production.
 
 **Solution:** Install [Open Policy Agent](https://www.openpolicyagent.org/docs/latest/kubernetes-primer/#writing-policies) and add the custom rule to restrict docker images.
 
