@@ -4,7 +4,9 @@
 
 **Problem:** I want to make my cluster more secure and add restrictions on the images used in production.
 
-**Solution:** Install [Open Policy Agent](https://www.openpolicyagent.org/docs/latest/kubernetes-primer/#writing-policies) and add the custom rule to restrict docker images.
+**Solution:** Install [Open Policy Agent](https://www.openpolicyagent.org/docs/latest/kubernetes-primer/#writing-policies) 
+or [Kyverno](https://kyverno.io/policies/best-practices/restrict-image-registries/restrict-image-registries/) 
+and add the custom rule to restrict docker images.
 
 **Can I do it easier?** Sure, you can, just install ImageGate and configure allowed registries, prohibited image tags and enable/disable non-tagged images.
 
